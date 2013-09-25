@@ -89,6 +89,8 @@ define([
           // patch in help as field if scope is not a Backbone Model.
           if (help == null && this.scope.get && this.scope.get('help') != null) {
             this.scope.help = this.scope.get('help');
+            this.scope.help_icon_class = this.scope.get('help_icon_class');
+            this.scope.$el = self.$el;
           }
           var help = this.scope.help;
           var $help = help;
@@ -107,7 +109,7 @@ define([
           $helpLink.click(function(evt) {
             if(!self.scope.help_flipped){ 
               self.$el.data('dialog').option('closeOnEscape', false);
-//              $buttonPane.hide();
+              $buttonPane.hide();
               $thedialog.flippy({
                 verso:$helpPane,
                 direction:"LEFT",
@@ -116,9 +118,11 @@ define([
                 onFinish : function() {
                   self.scope.$el.find('.help-revert-button a').click( function(evt) {
                     $thedialog.flippyReverse();
+                    $buttonPane.show();
                   });
                   self.scope.$el.find('.help-link a').click( function(evt) {
                     $thedialog.flippyReverse();
+                    $buttonPane.show();
                   });       
                   if(!self.scope.help_flipped){
                     self.scope.help_flipped = true;
